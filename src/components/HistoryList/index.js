@@ -7,6 +7,7 @@ import './index.css'
 class HistoryList extends Component {
   state = {
     searchInput: '',
+    initialHistoryList: 'initialHistoryList',
   }
 
   onChangeSearchInput = event => {
@@ -16,6 +17,8 @@ class HistoryList extends Component {
   }
 
   deleteTodo = id => {
+    console.log(id)
+    const {initialHistoryList} = this.state
     const updatedHistoryList = initialHistoryList.filter(
       eachhistory => eachhistory.id !== id,
     )
@@ -28,6 +31,9 @@ class HistoryList extends Component {
   render() {
     const {searchInput} = this.state
     const {initialHistoryList} = this.props
+    const searchResults = initialHistoryList.filter(eachList =>
+      eachList.title.includes(searchInput),
+    )
 
     return (
       <>
@@ -57,7 +63,7 @@ class HistoryList extends Component {
           </div>
         </nav>
         <ul className="History-list">
-          {initialHistoryList.map(eachList => (
+          {searchResults.map(eachList => (
             <HistoryItem
               key={eachList.id}
               HistoryDetails={eachList}
